@@ -9,7 +9,9 @@ import { Component, VERSION } from "@angular/core";
 export class AppComponent {
   constructor(http: HttpClient) {
     http
-      .get("https://en.wikipedia.org/api/rest_v1/page/summary/Viljandi_County")
+      .get<any>(
+        "https://en.wikipedia.org/api/rest_v1/page/summary/Viljandi_County"
+      )
       .subscribe(data => {
         console.log(data);
         this.pageSummary = data.extract;
