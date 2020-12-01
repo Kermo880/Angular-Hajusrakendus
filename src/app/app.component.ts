@@ -12,7 +12,6 @@ export class AppComponent {
   constructor(private http: HttpClient) {}
 
   startSearch() {
-    console.log(this.searchInput.nativeElement.value);
     this.http
       .get<any>(
         `https://en.wikipedia.org/api/rest_v1/page/summary/${
@@ -22,16 +21,13 @@ export class AppComponent {
       .subscribe(
         data => {
           console.log(data);
-          this.pageSummary = data.extract;
-          this.pageThumbnail = data.thumbnail.source;
-          this.name = data.titles.display;
+          this.searchData = data;
         },
-        error => {}
+        error => {
+          this.searchData = null;
+          throw error;
+        }
       );
   }
-
-  name: string;
-
-  pageSummary: string;
-  pageThumbnail: string;
+  searchData: any;
 }
